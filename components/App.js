@@ -4,6 +4,8 @@ import TweetWall from './TweetWall';
 import { getTweets }from '../lib/mockAPI';
 import { initialize, update } from '../lib/chart';
 
+require('fbjs/lib/ExecutionEnvironment').canUseDOM = true
+
 export default class App extends React.Component {
 
   constructor() {
@@ -17,12 +19,21 @@ export default class App extends React.Component {
   }
 
   // TODO: componentWillMount()
-
+  componentWillMount(){
+    this.fetchTweets()
+  }
   // TODO: componentDidMount()
-
+  componentDidMount(){
+    this.startInterval()
+  }
   // TODO: componentWillUnmount()
-
+  componentWillUnmount(){
+    this.cleanUpInterval(this.interval)
+  }
   // TODO: componentDidUpdate()
+  componentDidUpdate(){
+    this.updateChart(this.state.latestTweets.length)
+  }
 
   updateChart(numTweets) {
     update(numTweets);
